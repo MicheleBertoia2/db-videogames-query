@@ -206,5 +206,14 @@ GROUP BY sh.id
 ORDER BY count(a.id) DESC 
 LIMIT 1;
 
-13.
+13. SELECT DISTINCT  c.name AS categoria
+FROM categories c
+JOIN category_videogame cv  ON c.id = cv.category_id
+JOIN videogames v ON cv.videogame_id = v.id
+LEFT JOIN (
+    SELECT videogame_id, AVG(rating) AS media_voti
+    FROM reviews  
+    GROUP BY videogame_id
+) r ON v.id = r.videogame_id
+WHERE r.media_voti IS NULL OR r.media_voti < 2;
 
